@@ -44,7 +44,18 @@ def extract_names(filename):
     ['2006', 'Aaliyah 91', 'Aaron 57', 'Abagail 895', ...]
     """
     names = []
-    # +++your code here+++
+    with open(filename) as f:
+        content = f.read()
+    year = re.search(r'Popularity\sin\s(\d\d\d\d)', content)
+    year = re.search(r'(\d\d\d\d)', year.group())
+    m = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', content)
+    for entry in m:
+        if entry[1] not in dict(names):
+            names.append((entry[1], entry[0]))
+        if entry[1] not in dict(names):
+            names.append((entry[2], entry[0]))
+    names.sort(key=lambda x: x[0])
+    names.insert(0, year.group())
     return names
 
 
@@ -81,8 +92,25 @@ def main(args):
     # Format the resulting list as a vertical list (separated by newline \n).
     # Use the create_summary flag to decide whether to print the list
     # or to write the list to a summary file (e.g. `baby1990.html.summary`).
-
-    # +++your code here+++
+    if not create_summary:
+        for baby in file_list:
+            f = extract_names(baby)
+            for line in f:
+                if f.index(line) == 0:
+                    print(str(line))
+                else:
+                    print(line[0] + ' ' + line[1])
+    else:
+        for baby in file_list:
+            f = extract_names(baby)
+            d = open(baby+'.summary', 'w')
+            for line in f:
+                for line in f:
+                    if f.index(line) == 0:
+                        d.write(str(line) + '\n')
+                    else:
+                        d.write(str(line[0]) + ' ' + str(line[1]) + '\n')
+            d.close
 
 
 if __name__ == '__main__':

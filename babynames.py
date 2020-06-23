@@ -105,11 +105,10 @@ def main(args):
             f = extract_names(baby)
             d = open(baby+'.summary', 'w')
             for line in f:
-                for line in f:
-                    if f.index(line) == 0:
-                        d.write(str(line) + '\n')
-                    else:
-                        d.write(str(line[0]) + ' ' + str(line[1]) + '\n')
+                if f.index(line) == 0:
+                    d.write(str(line) + '\n')
+                else:
+                    d.write(str(line[0]) + ' ' + str(line[1]) + '\n')
             d.close
 
 

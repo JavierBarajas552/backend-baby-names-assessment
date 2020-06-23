@@ -52,7 +52,7 @@ def extract_names(filename):
     for entry in m:
         if entry[1] not in dict(names):
             names.append((entry[1], entry[0]))
-        if entry[1] not in dict(names):
+        if entry[2] not in dict(names):
             names.append((entry[2], entry[0]))
     names.sort(key=lambda x: x[0])
     names.insert(0, year.group())
